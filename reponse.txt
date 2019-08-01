@@ -1,0 +1,82 @@
+#le nombre total d'objets Album contenus dans la base 
+Album.count
+=> 347
+
+#Qui est l'auteur de la chanson "White Room" ?
+Track.where(title: "White Room")
+=>artist: "Eric Clapton"
+
+#Quelle chanson dure exactement 188133 milliseconds ?
+Track.find_by(duration: 188133)
+=> title: "Perfect"
+
+#Quel groupe a sorti l'album "Use Your Illusion II" ?
+Album.find_by(Title: "Use Your Illusion II")
+=>  artist: "Guns N Roses"
+
+#Combien y a t'il d'albums dont le titre contient "Great" ?
+m = Album.where("title like ?", "%Great%")
+m.count
+=> 13
+
+#Supprime tous les albums dont le nom contient "music".
+ album = Album.where("title like?", "%music%")
+=>album.destroy_all
+#Combien y a t'il d'albums écrits par AC/DC ?
+chanson = Album.where("artist like?", "%AC/DC%")
+chanson.count
+=> 2
+
+#Combien de chanson durent exactement 158589 millisecondes ?
+time = Track.find_by(duration: 158589)
+=> nil
+
+#puts en console tous les titres de AC/DC.
+chanson = Album.where("artist like?", "%AC/DC%")
+chanson.each do |i|
+puts i.title
+end
+=> For Those About To Rock We Salute You
+Let There Be Rock
+
+#puts en console tous les titres de l'album "Let There Be Rock".
+titre = Track.where("album like?","Let There Be Rock")
+titre.each do |t|
+puts t.title
+end
+=>Go Down
+Dog Eat Dog
+Let There Be Rock
+Bad Boy Boogie
+Problem Child
+Overdose
+Hell Aint A Bad Place To Be
+Whole Lotta Rosie
+
+#Calcule le prix total de cet album ainsi que sa durée totale.
+titre = Track.where("album like?","Let There Be Rock")
+sumprix = 0
+sumdure = 0
+titre.each do |p|
+	sumprix += p.price
+	sumdure += p.duration
+end
+=>sumprix
+7.920000000000001
+=>sumdure
+2453259 
+
+#Calcule le coût de l'intégralité de la discographie de "Deep Purple"
+cout = Track.where("artist like?","Deep Purple")
+money = 0
+cout.each do |c|
+	money += c.price
+end
+#Modifie (via une boucle) tous les titres de "Eric Clapton" afin qu'ils soient affichés avec "Britney Spears" en artist.
+duplica = Track.where("artist like ?","Eric Clapton")
+duplica.each do |change|
+	change.artist= "Eric Clapton & Britney Spears"
+end
+
+
+
